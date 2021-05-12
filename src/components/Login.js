@@ -21,6 +21,20 @@ function Login(props) {
           <h1>Welcome to your professional community</h1>
           <img src="/images/login-hero.svg" alt="" />
         </Hero>
+        <Form>
+          <LocalLogin>
+            <Email type="email" placeholder="Email or phone number"></Email>
+            <Password
+              type="password"
+              placeholder="Your password if you remember"
+            ></Password>
+            <ButtonSignIn href="/">Sign in</ButtonSignIn>
+            <Google>
+            <img src="/images/google.svg" alt="Google signin" />
+            Sign In With Google
+          </Google>
+          </LocalLogin>    
+        </Form>
       </Section>
     </Container>
   );
@@ -118,26 +132,26 @@ const Section = styled.section`
 `;
 
 const Hero = styled.div`
-  width:100%;
-  display: flex;
-  h1{
+  width: 100%;
+  /* display: flex; */
+  h1 {
     padding-bottom: 0;
     width: 55%;
     font-size: 60px;
     color: #2977c9;
-    font-weight:200;
+    font-weight: 200;
     line-height: 71px;
-    @media (max-width: 768px){
-      text-align:center;
-      font-size:30px;
+    @media (max-width: 768px) {
+      text-align: center;
+      font-size: 30px;
       width: 100%;
       line-height: 2;
     }
   }
 
-  img{
-    width: 700px;
-    height: 670px;
+  img {
+    width: 750px;
+    height: 700px;
     position: absolute;
     bottom: -2px;
     right: -150px;
@@ -145,9 +159,88 @@ const Hero = styled.div`
       top: 230px;
       width: initial;
       height: initial;
+      overflow-x: hidden;
+      position: initial;
     }
-
   }
+`;
+
+const Form = styled.div`
+  margin-top: 100px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 10px;
+  }
+`;
+
+// Login with account local
+const LocalLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    margin: 0 40px;
+  }
+`;
+
+const Email = styled.input`
+  margin-bottom: 15px;
+  height: 45px;
+  border-radius: 5px;
+  font-size: 16px;
+`;
+
+const Password = styled.input`
+  margin-bottom: 15px;
+  height: 45px;
+  border-radius: 5px;
+  font-size: 16px;
+`;
+
+const ButtonSignIn = styled.button`
+  margin-bottom: 15px;
+  height: 50px;
+  border-radius: 30px;
+  background: #2977c9;
+  border: 1px solid #fff;
+  font-size: 16px;
+  color: #fff;
+
+  &:hover {
+    background: #29779a;
+  }
+`;
+
+// Login with account google
+const Google = styled.button`
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  border-radius: 28px;
+  vertical-align: middle;
+  font-size: 16px;
+  /* transition-duration: 0.16s; */
+  border: 1px solid #888;
+  & > img {
+    margin-right: 15px;
+  }
+
+  &:hover{
+    background-color: rgba(207, 207, 207, 0.25);
+    border: 2px solid #111;
+    transition-duration: 0.16s;
+  }
+
+  @media (max-width: 768px){
+    width: 100%;
+    margin: auto;
+}
 `;
 
 export default Login;

@@ -4,10 +4,13 @@ const MainSide = (props) => {
   return (
     <Container>
       <ShareBox>
-        <div>
-          <img src="/images/user.svg" alt="" />
-          <button>Start a post</button>
-        </div>
+        What the fuck are you sharing?
+        <StartPost>
+          <div>
+            <img src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8" alt="" />
+            <button>Start a post</button>
+          </div>
+        </StartPost>
         <TagItem>
           <Photo>
             <button>
@@ -15,24 +18,24 @@ const MainSide = (props) => {
               <span>Photo</span>
             </button>
           </Photo>
-          <Video>
+          <Photo>
             <button>
               <img src="/images/video-icon.svg" alt="" />
               <span>Video</span>
             </button>
-          </Video>
-          <Event>
+          </Photo>
+          <Photo>
             <button>
               <img src="/images/event-icon.svg" alt="" />
               <span>Events</span>
             </button>
-          </Event>
-          <Article>
+          </Photo>
+          <Photo>
             <button>
               <img src="/images/article-icon.svg" alt="" />
               <span>Article</span>
             </button>
-          </Article>
+          </Photo>
         </TagItem>
       </ShareBox>
     </Container>
@@ -62,6 +65,38 @@ const ShareBox = styled(CommonCard)`
   margin: 0 0 8px;
   background: #fff;
 `;
+
+const StartPost = styled.div`
+  width: 100%;
+  background: transparent;
+  & > div {
+    display: flex;
+    flex-direction: row;
+    img{
+      width: 48px;
+      border-radius: 50%;
+      margin: 15px;
+    }
+    button{
+      width: 80%;
+      margin-top:10px;
+      margin-bottom: 15px;
+      border: none;
+      line-height:2;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(0,0,0,0.9);
+      &:hover{
+        border-top: 1px solid rgba(0,0,0,0.12);
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+        /* border-radius: 20px; */
+        box-shadow: 0 0 1px 1px rgba(0,0,0,0.1);
+      }
+    }
+  }
+`;
+
 const TagItem = styled.div`
   display: flex;
   flex-direction: row;
@@ -75,75 +110,18 @@ const Photo = styled.div`
   button {
     border: none;
     img {
-      width: 15px;
-      height: 15px;
+      width: 40px;
+      height: 20px;
     }
     span {
       font-size: 12px;
-    }
-    &:hover{
-      border: 1px solid rgba(0,0,0,0.15);
-      border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
-    }
-  }
-`;
-const Video = styled.div`
-  width: 50px;
-  height: 50px;
-  button {
-    border: none;
-    img {
-      width: 15px;
-      height: 15px;
-    }
-    span {
-      font-size: 12px;
-    }
-    &:hover{
-      border: 1px solid rgba(0,0,0,0.15);
-      border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
-    }
-  }
-`;
-const Event = styled.div`
-  width: 50px;
-  height: 50px;
-  button {
-    border: none;
+      color: #70b5f9;
 
-    img {
-      width: 15px;
-      height: 15px;
     }
-    span {
-      font-size: 12px;
-    }
-    &:hover{
-      border: 1px solid rgba(0,0,0,0.15);
+    &:hover {
+      border: 1px solid rgba(0, 0, 0, 0.15);
       border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
-    }
-
-  }
-`;
-const Article = styled.div`
-  width: 50px;
-  height: 50px;
-  button {
-    border: none;
-    img {
-      width: 15px;
-      height: 15px;
-    }
-    span {
-      font-size: 12px;
-    }
-    &:hover{
-      border: 1px solid rgba(0,0,0,0.15);
-      border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
     }
   }
 `;

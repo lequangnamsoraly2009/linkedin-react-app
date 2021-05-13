@@ -7,7 +7,10 @@ const MainSide = (props) => {
         What the fuck are you sharing?
         <StartPost>
           <div>
-            <img src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8" alt="" />
+            <img
+              src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
+              alt=""
+            />
             <button>Start a post</button>
           </div>
         </StartPost>
@@ -38,6 +41,27 @@ const MainSide = (props) => {
           </Photo>
         </TagItem>
       </ShareBox>
+      <div>
+        <Article>
+          Article
+          <HeaderInfo>
+            <InfoUser>
+              <img
+                src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
+                alt=""
+              />
+              <InfoTitle>
+                <span>Name User</span>
+                <span>Company Name</span>
+                <span>Date</span>
+              </InfoTitle>
+            </InfoUser>
+            
+              <img src="/images/ellipsis-icon.svg" alt=""/>
+            
+          </HeaderInfo>
+        </Article>
+      </div>
     </Container>
   );
 };
@@ -47,6 +71,7 @@ const Container = styled.div`
   max-width: 100%;
 `;
 
+// Khung box dựng sẵn - tương tự components bên ngoài được import vào - ở đây thì copy vào
 const CommonCard = styled.div`
   text-align: center;
   overflow: hidden;
@@ -72,26 +97,27 @@ const StartPost = styled.div`
   & > div {
     display: flex;
     flex-direction: row;
-    img{
+    img {
       width: 48px;
       border-radius: 50%;
       margin: 15px;
     }
-    button{
+    button {
       width: 80%;
-      margin-top:10px;
+      margin-top: 10px;
       margin-bottom: 15px;
-      border: none;
-      line-height:2;
+      border: 1px solid rgba(0, 0, 0, 0.01);
+      border-radius: 20px;
+      line-height: 2;
       text-align: left;
       font-size: 16px;
       font-weight: 700;
-      color: rgba(0,0,0,0.9);
-      &:hover{
-        border-top: 1px solid rgba(0,0,0,0.12);
-        border-bottom: 1px solid rgba(0,0,0,0.12);
-        /* border-radius: 20px; */
-        box-shadow: 0 0 1px 1px rgba(0,0,0,0.1);
+      color: rgba(0, 0, 0, 0.9);
+      &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        /* border-bottom: 1px solid rgba(0,0,0,0.12); */
+        border-radius: 20px;
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
       }
     }
   }
@@ -116,14 +142,27 @@ const Photo = styled.div`
     span {
       font-size: 12px;
       color: #70b5f9;
-
     }
     &:hover {
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.12);
+      /* border: 1px solid rgba(0, 0, 0, 0.15); */
+      background: rgba(0, 0, 0, 0.09);
+      border-radius: 5px;
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.09);
     }
   }
 `;
+
+const Article = styled(CommonCard)``;
+
+const HeaderInfo = styled.div`
+  
+`;
+
+const InfoUser = styled.div``;
+
+const InfoTitle = styled.div``;
+
+
+
 
 export default MainSide;

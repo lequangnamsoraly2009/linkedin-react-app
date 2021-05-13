@@ -97,6 +97,7 @@ const Content = styled.div`
   margin: 0 auto;
   min-height: 100%;
   max-width: 1300px;
+  
 `;
 
 const Logo = styled.div``;
@@ -167,7 +168,14 @@ const NavListWrap = styled.ul`
           transition: transform 0.2s ease-in-out;
           width: 100%;
           border-color: rgba(0,0,0,0.9);
+          @media (max-width: 768px){
+            bottom:-2px;
+            left:0;
+          }
       }
+  }
+  @media (max-width: 768px){
+    margin-top:10px; 
   }
 `;
 
@@ -196,6 +204,7 @@ const NavList = styled.li`
     @media (max-width: 768px) {
       min-width: 70px;
     }
+    
   }
 
   &:hover,
@@ -250,7 +259,7 @@ const User = styled(NavList)`
             align-items: center;
             display: flex;
             justify-content: center;
-            top:-49px;
+            top:-40px;
             left: 335px;
         }  
         }

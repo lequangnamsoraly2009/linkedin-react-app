@@ -3,37 +3,38 @@ import styled from "styled-components";
 const MainSide = (props) => {
   return (
     <Container>
-      <ShareBox>Share</ShareBox>
-      <div>
-        <img src="/images/user.svg" alt="" />
-        <button>Start a post</button>
-      </div>
-      <TagItem>
-        <Photo>
-          <button>
-            <img src="/images/image-icon.svg" alt="" />
-            <span>Photo</span>
-          </button>
-        </Photo>
-        <Video>
-          <button>
-            <img src="/images/video-icon.svg" alt="" />
-            <span>Video</span>
-          </button>
-        </Video>
-        <Event>
-          <button>
-            <img src="/images/event-icon.svg" alt="" />
-            <span>Events</span>
-          </button>
-        </Event>
-        <Article>
-          <button>
-            <img src="/images/article-icon.svg" alt="" />
-            <span>Article</span>
-          </button>
-        </Article>
-      </TagItem>
+      <ShareBox>
+        <div>
+          <img src="/images/user.svg" alt="" />
+          <button>Start a post</button>
+        </div>
+        <TagItem>
+          <Photo>
+            <button>
+              <img src="/images/image-icon.svg" alt="" />
+              <span>Photo</span>
+            </button>
+          </Photo>
+          <Video>
+            <button>
+              <img src="/images/video-icon.svg" alt="" />
+              <span>Video</span>
+            </button>
+          </Video>
+          <Event>
+            <button>
+              <img src="/images/event-icon.svg" alt="" />
+              <span>Events</span>
+            </button>
+          </Event>
+          <Article>
+            <button>
+              <img src="/images/article-icon.svg" alt="" />
+              <span>Article</span>
+            </button>
+          </Article>
+        </TagItem>
+      </ShareBox>
     </Container>
   );
 };
@@ -63,21 +64,88 @@ const ShareBox = styled(CommonCard)`
 `;
 const TagItem = styled.div`
   display: flex;
-  flex-direction: row !important;
+  flex-direction: row;
   justify-content: space-around;
+  margin-top: 10px;
 `;
 const Photo = styled.div`
   width: 50px;
   height: 50px;
+
   button {
+    border: none;
     img {
-        width: 20px;
-        height: 20px;
+      width: 15px;
+      height: 15px;
+    }
+    span {
+      font-size: 12px;
+    }
+    &:hover{
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
     }
   }
 `;
-const Video = styled.div``;
-const Event = styled.div``;
-const Article = styled.div``;
+const Video = styled.div`
+  width: 50px;
+  height: 50px;
+  button {
+    border: none;
+    img {
+      width: 15px;
+      height: 15px;
+    }
+    span {
+      font-size: 12px;
+    }
+    &:hover{
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
+    }
+  }
+`;
+const Event = styled.div`
+  width: 50px;
+  height: 50px;
+  button {
+    border: none;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+    span {
+      font-size: 12px;
+    }
+    &:hover{
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
+    }
+
+  }
+`;
+const Article = styled.div`
+  width: 50px;
+  height: 50px;
+  button {
+    border: none;
+    img {
+      width: 15px;
+      height: 15px;
+    }
+    span {
+      font-size: 12px;
+    }
+    &:hover{
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.12);
+    }
+  }
+`;
 
 export default MainSide;

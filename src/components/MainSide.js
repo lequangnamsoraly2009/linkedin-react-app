@@ -53,13 +53,42 @@ const MainSide = (props) => {
               <InfoTitle>
                 <span>Name User</span>
                 <span>Company Name</span>
-                <span>Date</span>
+                <span>Date
+                  <img src='/images/global-icon.svg' alt='' />
+                </span>
               </InfoTitle>
             </InfoUser>
-            
-              <img src="/images/ellipsis-icon.svg" alt=""/>
-            
+            <img src="/images/ellipsis-icon.svg" alt="" />
           </HeaderInfo>
+          <TextArticle>
+            abcxyzghjakksadkdaskdaskdaskadsk
+          </TextArticle>
+          <ActionArticle>
+            <Action>
+              <button>
+                <img src="/images/like-black-icon.svg" alt=''/>
+                <span>Like</span>
+              </button>
+            </Action>
+            <Action>
+              <button>
+                <img src="/images/like-black-icon.svg" alt=''/>
+                Like
+              </button>
+            </Action>
+            <Action>
+              <button>
+                <img src="/images/like-black-icon.svg" alt=''/>
+                Like
+              </button>
+            </Action>
+            <Action>
+              <button>
+                <img src="/images/like-black-icon.svg" alt=''/>
+                Like
+              </button>
+            </Action>
+          </ActionArticle>
         </Article>
       </div>
     </Container>
@@ -155,14 +184,79 @@ const Photo = styled.div`
 const Article = styled(CommonCard)``;
 
 const HeaderInfo = styled.div`
-  
+  display: flex;
+  justify-content: space-between;
+  img {
+    width: 30px;
+    margin: 15px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 20px;
+      margin: 15px;
+    }
+  }
 `;
 
-const InfoUser = styled.div``;
+const InfoUser = styled.div`
+  display: flex;
+  flex-direction: row;
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: 15px;
+  }
+`;
 
-const InfoTitle = styled.div``;
+const InfoTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  span {
+    text-align: left;
+    &:first-child {
+      font-size: 16px;
+      font-weight: 600;
+    }
 
+    &:nth-child(n+2) {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    img{
+      border:none;
+      margin: 0;
+      width:16px;
+      height: auto;
+      margin-left: 5px;
+    }
+  }
+`;
 
+const TextArticle = styled.div`
+  text-align: left;
+  margin: 5px 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+`;
 
+const ActionArticle = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-right: 180px;
+`;
+
+const Action = styled.div`
+  button{
+  border: none;
+    background: transparent;
+    span{
+      margin: auto;
+    }
+  }
+`;
 
 export default MainSide;

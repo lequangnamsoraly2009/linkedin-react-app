@@ -50,42 +50,70 @@ const MainSide = (props) => {
                 src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
                 alt=""
               />
+
               <InfoTitle>
                 <span>Name User</span>
                 <span>Company Name</span>
-                <span>Date
-                  <img src='/images/global-icon.svg' alt='' />
+                <span>
+                  Date
+                  <img src="/images/global-icon.svg" alt="" />
                 </span>
               </InfoTitle>
             </InfoUser>
             <img src="/images/ellipsis-icon.svg" alt="" />
           </HeaderInfo>
-          <TextArticle>
-            abcxyzghjakksadkdaskdaskdaskadsk
-          </TextArticle>
+          <TextArticle>abcxyzghjakksadkdaskdaskdaskadsk</TextArticle>
+          <ImgShared>
+            <a href="/">
+              <img
+                src="https://dean1665.vn/uploads/du-an/2020_05/flat-farm-landscape_23-2148180089.jpg"
+                alt="img"
+              />
+              <img
+                src="https://frenchmoments.eu/wp-content/uploads/2020/03/Lorraine-Sion-Countryside-LR-%C2%A9-French-Moments.jpg"
+                alt=""
+              />
+            </a>
+          </ImgShared>
+          <ActionCount>
+            <li>
+              <button>
+                <img
+                  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+                  alt=""
+                />
+                <img
+                  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
+                  alt=""
+                />
+                <img
+                  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
+                  alt=""
+                />
+                <span>104</span>
+              </button>
+            </li>
+            <li>
+              <a href="/">69 Comments</a>
+            </li>
+          </ActionCount>
           <ActionArticle>
             <Action>
               <button>
-                <img src="/images/like-black-icon.svg" alt=''/>
+                <img src="/images/like-black-icon.svg" alt="" />
                 <span>Like</span>
               </button>
             </Action>
             <Action>
               <button>
-                <img src="/images/like-black-icon.svg" alt=''/>
-                Like
+                <img src="/images/message-icon.svg" alt="" />
+                <span>Comment</span>
               </button>
             </Action>
             <Action>
               <button>
-                <img src="/images/like-black-icon.svg" alt=''/>
-                Like
-              </button>
-            </Action>
-            <Action>
-              <button>
-                <img src="/images/like-black-icon.svg" alt=''/>
-                Like
+                <img src="/images/share-icon.svg" alt="" />
+                <span>Share</span>
               </button>
             </Action>
           </ActionArticle>
@@ -222,15 +250,15 @@ const InfoTitle = styled.div`
       font-weight: 600;
     }
 
-    &:nth-child(n+2) {
+    &:nth-child(n + 2) {
       font-size: 12px;
       font-weight: 400;
       color: rgba(0, 0, 0, 0.6);
     }
-    img{
-      border:none;
+    img {
+      border: none;
       margin: 0;
-      width:16px;
+      width: 16px;
       height: auto;
       margin-left: 5px;
     }
@@ -240,21 +268,79 @@ const InfoTitle = styled.div`
 const TextArticle = styled.div`
   text-align: left;
   margin: 5px 15px;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+const ImgShared = styled.div`
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  img {
+    height: 400px;
+  }
+`;
+
+const ActionCount = styled.div`
+  position: relative;
+  list-style-type: none;
+  display: flex;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  button {
+    transition: transform 0.1s ease-in-out;
+    border: none;
+    background: transparent;
+    margin: 0  30px 0 0;
+    img {
+      vertical-align: bottom;
+      max-width: 20px;
+    }
+    &:hover {
+      background: white;
+      transform: scale(1.5);
+      position: absolute;
+      display: block;
+      top: -5px;
+      left: 12px;
+      margin-right: 150px;
+      img {
+        max-width: 30px;
+      }
+    }
+  }
+  a{
+    display: block;
+    text-decoration: none;
+    color: black;
+  }
 `;
 
 const ActionArticle = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-right: 180px;
+  margin-right: 50%;
+  margin-bottom: 10px;
 `;
 
 const Action = styled.div`
-  button{
-  border: none;
+  button {
+    border: none;
     background: transparent;
-    span{
+    width: auto;
+    height: 35px;
+    img {
+      width: 20px;
+      height: 20px;
+      vertical-align: bottom;
+    }
+    span {
       margin: auto;
+      margin-left: 5px;
+    }
+    &:hover{
+      background: rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1)
     }
   }
 `;

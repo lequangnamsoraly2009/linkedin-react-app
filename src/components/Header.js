@@ -47,27 +47,38 @@ const Header = (props) => {
             </NavList>
             <NavList>
               <a href="/home">
-                <img src="/images/nav-notifications.svg" alt="nav-notifications" />
+                <img
+                  src="/images/nav-notifications.svg"
+                  alt="nav-notifications"
+                />
                 <span>Notifications</span>
               </a>
             </NavList>
             <User>
-                <a href='/home'>
-                    <img src="/images/user.svg" alt="user" />
-                    <span>Me<img src="/images/down-icon.svg" alt='down-icon' /></span>
-                    
-                </a>
-                <SignOut>
-                    <a href='/'>Sign Out</a>
-                </SignOut>
+              <a href="/home">
+                {props.user && props.user.photoURL ? (
+                  <img src={props.user.photoURL} alt="user" />
+                ) : (
+                  <img src="/images/user.svg" alt="user" />
+                )}
+
+                <span>
+                  Me
+                  <img src="/images/down-icon.svg" alt="down-icon" />
+                </span>
+              </a>
+              <SignOut>
+                <a href="/">Sign Out</a>
+              </SignOut>
             </User>
             <Work>
-                <a href='/home'>
-                    <img src="/images/nav-work.svg" alt="work" />
-                    <span>Work
-                        <img src="/images/down-icon.svg" alt='down-icon'/>
-                    </span>
-                </a>
+              <a href="/home">
+                <img src="/images/nav-work.svg" alt="work" />
+                <span>
+                  Work
+                  <img src="/images/down-icon.svg" alt="down-icon" />
+                </span>
+              </a>
             </Work>
           </NavListWrap>
         </Nav>
@@ -89,7 +100,6 @@ const Container = styled.div`
   @media (max-width: 768px) {
     padding: 0 24px;
   }
-
 `;
 const Content = styled.div`
   display: flex;
@@ -97,7 +107,6 @@ const Content = styled.div`
   margin: 0 auto;
   min-height: 100%;
   max-width: 1300px;
-  
 `;
 
 const Logo = styled.div``;
@@ -124,7 +133,7 @@ const SearchNav = styled.div`
       vertical-align: text-top;
     }
   }
-  @media(max-width: 768px){
+  @media (max-width: 768px) {
   }
 `;
 const SearchIcon = styled.div`
@@ -157,25 +166,25 @@ const NavListWrap = styled.ul`
   flex-wrap: nowrap;
   list-style-type: none;
 
-  .active{
-      span:after{
-          content:'';
-          transform: scaleX(1);
-          border-bottom: 2px solid var(--white,#fff);
-          bottom:-6px;
-          left:0;
-          position:absolute;
-          transition: transform 0.2s ease-in-out;
-          width: 100%;
-          border-color: rgba(0,0,0,0.9);
-          @media (max-width: 768px){
-            bottom:-2px;
-            left:0;
-          }
+  .active {
+    span:after {
+      content: "";
+      transform: scaleX(1);
+      border-bottom: 2px solid var(--white, #fff);
+      bottom: -6px;
+      left: 0;
+      position: absolute;
+      transition: transform 0.2s ease-in-out;
+      width: 100%;
+      border-color: rgba(0, 0, 0, 0.9);
+      @media (max-width: 768px) {
+        bottom: -2px;
+        left: 0;
       }
+    }
   }
-  @media (max-width: 768px){
-    margin-top:10px; 
+  @media (max-width: 768px) {
+    margin-top: 10px;
   }
 `;
 
@@ -204,7 +213,6 @@ const NavList = styled.li`
     @media (max-width: 768px) {
       min-width: 70px;
     }
-    
   }
 
   &:hover,
@@ -218,58 +226,54 @@ const NavList = styled.li`
 `;
 
 const SignOut = styled.div`
-    position: absolute;
-    top:45px;
-    background: #fff;
-    border-radius: 0 0 5px 5px;
-    width:100px;
-    height: 48px;
-    font-size:16px;
-    transition-duration: 0.16s;
-    text-align: center;
-    display: none;
-
-
+  position: absolute;
+  top: 45px;
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  width: 100px;
+  height: 48px;
+  font-size: 16px;
+  transition-duration: 0.16s;
+  text-align: center;
+  display: none;
 `;
 
 const User = styled(NavList)`
-    a> svg{
-        width:24px;
-        border-radius:50%;
+  a > svg {
+    width: 24px;
+    border-radius: 50%;
+  }
+  a > img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  span {
+    display: flex;
+    align-items: center;
+  }
+  &:hover {
+    ${SignOut} {
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
-    a>img{
-        width:24px;
-        height: 24px;
-        border-radius: 50%;
-    }
-    span{
-        display: flex;
+  }
+  @media (max-width: 768px) {
+    &:hover {
+      ${SignOut} {
         align-items: center;
+        display: flex;
+        justify-content: center;
+        top: -40px;
+        left: 335px;
+      }
     }
-    &:hover{
-        ${SignOut}{
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-    }
-    @media(max-width: 768px){
-        &:hover{
-            ${SignOut}{
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            top:-40px;
-            left: 335px;
-        }  
-        }
-    }
+  }
 `;
 
 const Work = styled(User)`
-    border-left: 1px solid rgba(0,0,0,0.1)
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 `;
-
-
 
 export default Header;

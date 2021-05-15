@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
+import PostModal from './PostModal';
 
 const MainSide = (props) => {
   return (
@@ -123,6 +124,7 @@ const MainSide = (props) => {
           </ActionArticle>
         </Article>
       </div>
+      <PostModal/>
     </Container>
   );
 };

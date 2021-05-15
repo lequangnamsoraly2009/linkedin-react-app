@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const MainSide = (props) => {
@@ -7,10 +8,11 @@ const MainSide = (props) => {
         What the fuck are you sharing?
         <StartPost>
           <div>
-            <img
-              src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
-              alt=""
-            />
+            {props.user ? (
+              <img src={props.user.photoURL} alt="" />
+            ) : (
+              <img src="/images/user.svg" alt="" />
+            )}
             <button>Start a post</button>
           </div>
         </StartPost>
@@ -46,23 +48,25 @@ const MainSide = (props) => {
           Article
           <HeaderInfo>
             <InfoUser>
-              <img
-                src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
-                alt=""
-              />
+              {props.user ? (
+                <img src={props.user.photoURL} alt="" />
+              ) : (
+                <img src="/images/user.svg" alt="" />
+              )}
 
               <InfoTitle>
-                <span>Name User</span>
+                {props.user ? <span>{props.user.displayName}</span> : <span>Name User</span>}
+                
                 <span>Company Name</span>
                 <span>
-                  Date
+                  7h
                   <img src="/images/global-icon.svg" alt="" />
                 </span>
               </InfoTitle>
             </InfoUser>
             <img src="/images/ellipsis-icon.svg" alt="" />
           </HeaderInfo>
-          <TextArticle>abcxyzghjakksadkdaskdaskdaskadsk</TextArticle>
+          <TextArticle>Today I feel so good ? </TextArticle>
           <ImgShared>
             <a href="/">
               <img
@@ -290,7 +294,7 @@ const ActionCount = styled.div`
     transition: transform 0.1s ease-in-out;
     border: none;
     background: transparent;
-    margin: 0  30px 0 0;
+    margin: 0 30px 0 0;
     img {
       vertical-align: bottom;
       max-width: 20px;
@@ -308,7 +312,7 @@ const ActionCount = styled.div`
       }
     }
   }
-  a{
+  a {
     display: block;
     text-decoration: none;
     color: black;
@@ -337,12 +341,22 @@ const Action = styled.div`
       margin: auto;
       margin-left: 5px;
     }
-    &:hover{
-      background: rgba(0,0,0,0.1);
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
       border-radius: 10px;
-      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1)
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
     }
   }
 `;
 
-export default MainSide;
+const mapStateToProps = (state) => ({
+  user : state.userState.user,
+});
+
+const mapDispatchToProps = (dispatch)=>{
+  return {};
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainSide);

@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Leftside = (props) => {
@@ -8,12 +9,17 @@ const Leftside = (props) => {
           <CardBackground />
           <a href="/home">
             <Photo>
-              <img
-                src="https://media-exp1.licdn.com/dms/image/C5603AQE--jgOpOqa1g/profile-displayphoto-shrink_200_200/0/1593244373746?e=1626307200&v=beta&t=YDTnRSFEo8pH82MsU-nP1zLziGMPdITpPEliJM5qKr8"
-                alt="img"
-              />
+              {props.user && props.user.photoURL ? (
+                <img src={props.user.photoURL} alt="img" />
+              ) : (
+                <img src="/images/user.svg" alt="img" />
+              )}
             </Photo>
-            <Link>Welcome, there!</Link>
+            {props.user && props.user.displayName ? (
+              <Link>Welcome {props.user.displayName}</Link>
+            ) : (
+              <Link>Welcome, there!</Link>
+            )}
           </a>
           <a href="/home">
             <AddPhotoText>Study at University Of Science HCMC</AddPhotoText>
@@ -78,14 +84,13 @@ const UserInfo = styled.div`
   padding: 12px 12px 16px;
   word-wrap: break-word;
   word-break: break-word;
-  &>a{
+  & > a {
     text-decoration: none;
-    &:hover{
-        text-decoration: underline;
-        color: blue;
+    &:hover {
+      text-decoration: underline;
+      color: blue;
     }
   }
-
 `;
 
 const CardBackground = styled.div`
@@ -122,8 +127,6 @@ const Link = styled.div`
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.9);
   font-weight: 600;
-  
-
 `;
 
 const AddPhotoText = styled.div`
@@ -132,7 +135,6 @@ const AddPhotoText = styled.div`
   font-size: 16px;
   line-height: 1.33;
   font-weight: 400;
-  
 `;
 
 const Widget = styled.div`
@@ -217,4 +219,14 @@ const CommunityCard = styled(ArtCard)`
   }
 `;
 
-export default Leftside;
+const mapStateToProps = (state) => ({
+  user: state.userState.user,
+});
+
+const mapDispatchToProps = (dispatch)=>{
+  return {};
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leftside);

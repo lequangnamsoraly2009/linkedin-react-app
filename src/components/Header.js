@@ -26,7 +26,7 @@ const Header = (props) => {
           <NavListWrap>
             <NavList className="active">
               <a href="/home">
-                <img src="/images/nav-Home.svg" alt="nav-Home" />
+                <img src="/images/nav-home.svg" alt="nav-Home" />
                 <span>Home</span>
               </a>
             </NavList>

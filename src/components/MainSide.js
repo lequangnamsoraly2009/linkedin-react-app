@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import PostModal from "./PostModal";
+import { getArticleAPI } from "../actions";
+import ReactPlayer from "react-player";
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
+
+  useEffect(() => {
+    props.getArticles();
+    console.log(props);
+  }, []);
 
   const handleClickClose = (e) => {
     e.preventDefault();
@@ -25,8 +32,9 @@ const MainSide = (props) => {
     }
   };
   return (
-    <Container>
-      <ShareBox>
+    <>
+      {props.articles.length === 0 ? (
+        <ShareBox>
         What the fuck are you sharing?
         <StartPost>
           <div>
@@ -35,122 +43,144 @@ const MainSide = (props) => {
             ) : (
               <img src="/images/user.svg" alt="" />
             )}
-            <button onClick={handleClickClose}>Start a post</button>
+            <button
+              onClick={handleClickClose}
+              disabled={props.loading ? true : false}
+            >
+              Start a post
+            </button>
           </div>
         </StartPost>
-        <TagItem>
-          <Photo>
-            <button>
-              <img src="/images/image-icon.svg" alt="" />
-              <span>Photo</span>
-            </button>
-          </Photo>
-          <Photo>
-            <button>
-              <img src="/images/video-icon.svg" alt="" />
-              <span>Video</span>
-            </button>
-          </Photo>
-          <Photo>
-            <button>
-              <img src="/images/event-icon.svg" alt="" />
-              <span>Events</span>
-            </button>
-          </Photo>
-          <Photo>
-            <button>
-              <img src="/images/article-icon.svg" alt="" />
-              <span>Article</span>
-            </button>
-          </Photo>
-        </TagItem>
-      </ShareBox>
-      <div>
-        <Article>
-          Article
-          <HeaderInfo>
-            <InfoUser>
-              {props.user ? (
-                <img src={props.user.photoURL} alt="" />
-              ) : (
-                <img src="/images/user.svg" alt="" />
-              )}
-
-              <InfoTitle>
+        </ShareBox>
+      ) : (
+        <Container>
+          <ShareBox>
+            What the fuck are you sharing?
+            <StartPost>
+              <div>
                 {props.user ? (
-                  <span>{props.user.displayName}</span>
+                  <img src={props.user.photoURL} alt="" />
                 ) : (
-                  <span>Name User</span>
+                  <img src="/images/user.svg" alt="" />
                 )}
-
-                <span>Company Name</span>
-                <span>
-                  7h
-                  <img src="/images/global-icon.svg" alt="" />
-                </span>
-              </InfoTitle>
-            </InfoUser>
-            <img src="/images/ellipsis-icon.svg" alt="" />
-          </HeaderInfo>
-          <TextArticle>Today I feel so good ? </TextArticle>
-          <ImgShared>
-            <a href="/">
-              <img
-                src="https://dean1665.vn/uploads/du-an/2020_05/flat-farm-landscape_23-2148180089.jpg"
-                alt="img"
-              />
-              <img
-                src="https://frenchmoments.eu/wp-content/uploads/2020/03/Lorraine-Sion-Countryside-LR-%C2%A9-French-Moments.jpg"
-                alt=""
-              />
-            </a>
-          </ImgShared>
-          <ActionCount>
-            <li>
-              <button>
-                <img
-                  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
-                  alt=""
-                />
-                <img
-                  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
-                  alt=""
-                />
-                <img
-                  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
-                  alt=""
-                />
-                <span>104</span>
-              </button>
-            </li>
-            <li>
-              <a href="/">69 Comments</a>
-            </li>
-          </ActionCount>
-          <ActionArticle>
-            <Action>
-              <button>
-                <img src="/images/like-black-icon.svg" alt="" />
-                <span>Like</span>
-              </button>
-            </Action>
-            <Action>
-              <button>
-                <img src="/images/message-icon.svg" alt="" />
-                <span>Comment</span>
-              </button>
-            </Action>
-            <Action>
-              <button>
-                <img src="/images/share-icon.svg" alt="" />
-                <span>Share</span>
-              </button>
-            </Action>
-          </ActionArticle>
-        </Article>
-      </div>
-      <PostModal showModal={showModal} handleClickClose={handleClickClose} />
-    </Container>
+                <button
+                  onClick={handleClickClose}
+                  disabled={props.loading ? true : false}
+                >
+                  Start a post
+                </button>
+              </div>
+            </StartPost>
+            <TagItem>
+              <Photo>
+                <button>
+                  <img src="/images/image-icon.svg" alt="" />
+                  <span>Photo</span>
+                </button>
+              </Photo>
+              <Photo>
+                <button>
+                  <img src="/images/video-icon.svg" alt="" />
+                  <span>Video</span>
+                </button>
+              </Photo>
+              <Photo>
+                <button>
+                  <img src="/images/event-icon.svg" alt="" />
+                  <span>Events</span>
+                </button>
+              </Photo>
+              <Photo>
+                <button>
+                  <img src="/images/article-icon.svg" alt="" />
+                  <span>Article</span>
+                </button>
+              </Photo>
+            </TagItem>
+          </ShareBox>
+          <ContentLoading>
+            {props.loading && <img src="./images/spin-loader.svg" alt="" />}
+            {props.articles.length > 0 &&
+              props.articles.map((article, key) => (
+                <Article key={key}>
+                  <HeaderInfo>
+                    <InfoUser>
+                      <img src={article.actor.image} alt="" />
+                      <InfoTitle>
+                        <span>{article.actor.title}</span>
+                        <span>{article.actor.description}</span>
+                        <span>
+                          {article.actor.date.toDate().toLocaleDateString()}
+                          <img src="/images/global-icon.svg" alt="" />
+                        </span>
+                      </InfoTitle>
+                    </InfoUser>
+                    <img src="/images/ellipsis-icon.svg" alt="" />
+                  </HeaderInfo>
+                  <TextArticle>{article.description}</TextArticle>
+                  <ImgShared>
+                    <a href="/">
+                      {!article.sharedImg && article.video ? (
+                        <ReactPlayer width={"100%"} url={article.video} />
+                      ) : (
+                        article.sharedImg && (
+                          <img src={article.sharedImg} alt="" />
+                        )
+                      )}
+                    </a>
+                  </ImgShared>
+                  <ActionCount>
+                    <li>
+                      <button>
+                        <img
+                          src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+                          alt=""
+                        />
+                        <img
+                          src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
+                          alt=""
+                        />
+                        <img
+                          src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
+                          alt=""
+                        />
+                        <span>{article.likes}</span>
+                      </button>
+                    </li>
+                    <li>
+                      <a href="/home">{article.comments} Comments</a>
+                    </li>
+                  </ActionCount>
+                  <ActionArticle>
+                    <Action>
+                      <button>
+                        <img src="/images/like-black-icon.svg" alt="" />
+                        <span>Like</span>
+                      </button>
+                    </Action>
+                    <Action>
+                      <button>
+                        <img src="/images/message-icon.svg" alt="" />
+                        <span>Comment</span>
+                      </button>
+                    </Action>
+                    <Action>
+                      <button>
+                        <img src="/images/share-icon.svg" alt="" />
+                        <span>Share</span>
+                      </button>
+                    </Action>
+                  </ActionArticle>
+                </Article>
+              ))}
+          </ContentLoading>
+          <PostModal
+            showModal={showModal}
+            handleClickClose={handleClickClose}
+          />
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -376,12 +406,23 @@ const Action = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => ({
-  user: state.userState.user,
-});
+const ContentLoading = styled.div`
+  text-align: center;
+  & > img {
+    width: 30px;
+  }
+`;
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    loading: state.articleState.loading,
+    user: state.userState.user,
+    articles: state.articleState.articles,
+  };
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  getArticles: () => dispatch(getArticleAPI()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainSide);

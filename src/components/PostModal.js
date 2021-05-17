@@ -6,7 +6,7 @@ const PostModal = (props) => {
   const [shareImage, setShareImage] = useState("");
 
   const handleChange = (e) => {
-    const image = e.target.file[0];
+    const image = e.target.files[0];
 
     if (image === "" || image === undefined) {
       alert(`image not found, the file is a ${typeof image}`);
@@ -52,13 +52,16 @@ const PostModal = (props) => {
                     style={{ display: "none" }}
                     onChange={handleChange}
                   />
+                  <label htmlFor="file-image">Select image</label>
+                  {shareImage && <img src={URL.createObjectURL(shareImage)} alt=""/>}
                 </UploadImage>
+
               </Editor>
             </SharedContent>
             <ShareCreation>
               <AttachAssets>
                 <AssetButton>
-                  <img src="/images/image-icon.svg" alt="" />
+                  <img src="/images/image-icon.svg" htmlFor="file-image" alt="" />
                 </AssetButton>
                 <AssetButton>
                   <img src="/images/youtube-icon.svg" alt="" />
@@ -210,5 +213,11 @@ const Editor = styled.div`
   }
 `;
 
-const UploadImage = styled.div``;
+const UploadImage = styled.div`
+  text-align: center;
+  img{
+    width: 100%;
+    margin: 0 10px;
+  }
+`;
 export default PostModal;

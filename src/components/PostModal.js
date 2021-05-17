@@ -2,7 +2,18 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const PostModal = (props) => {
-  const [editorText, setEditorText ] = useState("");
+  const [editorText, setEditorText] = useState("");
+  const [shareImage, setShareImage] = useState("");
+
+  const handleChange = (e) => {
+    const image = e.target.file[0];
+
+    if (image === "" || image === undefined) {
+      alert(`image not found, the file is a ${typeof image}`);
+      return;
+    }
+    setShareImage(image);
+  };
 
   const reset = (e) => {
     setEditorText("");
@@ -16,7 +27,7 @@ const PostModal = (props) => {
           <Content>
             <Header>
               <h2>Create a post</h2>
-              <button onClick={(event)=>reset(event)}>
+              <button onClick={(event) => reset(event)}>
                 <img src="/images/close-icon.svg" alt="" />
               </button>
             </Header>
@@ -31,7 +42,17 @@ const PostModal = (props) => {
                   onChange={(e) => setEditorText(e.target.value)}
                   placeholder="What do you want to share with everyone?"
                   autoFocus={true}
-                ></textarea>
+                />
+                <UploadImage>
+                  <input
+                    type="file"
+                    accept="image/gif,image/jpeg,image/png"
+                    name="image"
+                    id="file-image"
+                    style={{ display: "none" }}
+                    onChange={handleChange}
+                  />
+                </UploadImage>
               </Editor>
             </SharedContent>
             <ShareCreation>
@@ -43,7 +64,9 @@ const PostModal = (props) => {
                   <img src="/images/youtube-icon.svg" alt="" />
                 </AssetButton>
               </AttachAssets>
-              <PostButton>Post</PostButton>
+              <PostButton disabled={!editorText ? true : false}>
+                Post
+              </PostButton>
             </ShareCreation>
           </Content>
         </Container>
@@ -94,7 +117,8 @@ const Header = styled.div`
     width: 40px;
     min-width: auto;
     color: rgba(0, 0, 0, 0.15);
-    svg,img{
+    svg,
+    img {
       pointer-events: none;
     }
   }
@@ -142,6 +166,13 @@ const AssetButton = styled.button`
   height: 40px;
   min-width: auto;
   color: rgba(0, 0, 0, 0.5);
+  margin: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: transparent;
+  border-radius: 5px;
+  &:hover {
+    background: #afd0de;
+  }
 `;
 
 const AttachAssets = styled.div`
@@ -159,9 +190,9 @@ const PostButton = styled.button`
   border: 0.5px solid rgba(0, 0, 0, 0.1);
   color: white;
   padding: 0 16px;
-  background: #0a66c2;
+  background: ${(props) => (props.disabled ? "rgba(0,0,0,0.8)" : "#0a66c2")};
   &:hover {
-    background: #004182;
+    background: ${(props) => (props.disabled ? "rgba(0,0,0,0.8)" : "#004182")};
   }
 `;
 
@@ -179,4 +210,5 @@ const Editor = styled.div`
   }
 `;
 
+const UploadImage = styled.div``;
 export default PostModal;

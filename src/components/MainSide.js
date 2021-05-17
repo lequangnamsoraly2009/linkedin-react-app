@@ -1,8 +1,29 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import PostModal from './PostModal';
+import PostModal from "./PostModal";
 
 const MainSide = (props) => {
+  const [showModal, setShowModal] = useState("close");
+
+  const handleClickClose = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    } else {
+      switch (showModal) {
+        case "open":
+          setShowModal("close");
+          break;
+        case "close":
+          setShowModal("open");
+          break;
+        default:
+          setShowModal("close");
+          break;
+      }
+    }
+  };
   return (
     <Container>
       <ShareBox>
@@ -14,7 +35,7 @@ const MainSide = (props) => {
             ) : (
               <img src="/images/user.svg" alt="" />
             )}
-            <button>Start a post</button>
+            <button onClick={handleClickClose}>Start a post</button>
           </div>
         </StartPost>
         <TagItem>
@@ -56,8 +77,12 @@ const MainSide = (props) => {
               )}
 
               <InfoTitle>
-                {props.user ? <span>{props.user.displayName}</span> : <span>Name User</span>}
-                
+                {props.user ? (
+                  <span>{props.user.displayName}</span>
+                ) : (
+                  <span>Name User</span>
+                )}
+
                 <span>Company Name</span>
                 <span>
                   7h
@@ -124,7 +149,7 @@ const MainSide = (props) => {
           </ActionArticle>
         </Article>
       </div>
-      <PostModal/>
+      <PostModal showModal={showModal} handleClickClose={handleClickClose} />
     </Container>
   );
 };
@@ -352,13 +377,11 @@ const Action = styled.div`
 `;
 
 const mapStateToProps = (state) => ({
-  user : state.userState.user,
+  user: state.userState.user,
 });
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
   return {};
-}
-
-
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainSide);

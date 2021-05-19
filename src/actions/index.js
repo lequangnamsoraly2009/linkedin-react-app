@@ -79,7 +79,7 @@ export function postArticleAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
-            video: payload.video,
+            video: "",
             sharedImg: downloadURL,
         likes: Math.ceil(Math.random()*1000),
             comments: Math.ceil(Math.random()*1000),
@@ -88,7 +88,7 @@ export function postArticleAPI(payload) {
           dispatch(setLoading(false));
         }
       );
-    } else if (payload.video) {
+    } else if (payload.video !== "") {
       db.collection("articles").add({
         actor: {
           description: payload.user.email,
@@ -130,7 +130,7 @@ export function getArticleAPI() {
       .orderBy("actor.date", "desc")
       .onSnapshot((snapshot) => {
         payload = snapshot.docs.map((doc) => doc.data());
-        console.log(payload);
+        // console.log(payload);
         dispatch(getArticles(payload));
       });
   };

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PostModal from "./PostModal";
 import { getArticleAPI } from "../actions";
 import ReactPlayer from "react-player";
+import Comments from "./Comments";
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
@@ -35,22 +36,22 @@ const MainSide = (props) => {
     <>
       {props.articles.length === 0 ? (
         <ShareBox>
-        What the fuck are you sharing?
-        <StartPost>
-          <div>
-            {props.user ? (
-              <img src={props.user.photoURL} alt="" />
-            ) : (
-              <img src="/images/user.svg" alt="" />
-            )}
-            <button
-              onClick={handleClickClose}
-              disabled={props.loading ? true : false}
-            >
-              Start a post
-            </button>
-          </div>
-        </StartPost>
+          What the fuck are you sharing?
+          <StartPost>
+            <div>
+              {props.user ? (
+                <img src={props.user.photoURL} alt="" />
+              ) : (
+                <img src="/images/user.svg" alt="" />
+              )}
+              <button
+                onClick={handleClickClose}
+                disabled={props.loading ? true : false}
+              >
+                Start a post
+              </button>
+            </div>
+          </StartPost>
         </ShareBox>
       ) : (
         <Container>
@@ -171,9 +172,12 @@ const MainSide = (props) => {
                       </button>
                     </Action>
                   </ActionArticle>
+                  <Comments />
                 </Article>
+
               ))}
           </ContentLoading>
+
           <PostModal
             showModal={showModal}
             handleClickClose={handleClickClose}
@@ -250,7 +254,6 @@ const TagItem = styled.div`
 const Photo = styled.div`
   width: 50px;
   height: 50px;
-
   button {
     border: none;
     img {
@@ -280,7 +283,6 @@ const HeaderInfo = styled.div`
     margin: 15px;
     vertical-align: middle;
   }
-
   @media (max-width: 768px) {
     img {
       width: 20px;
@@ -310,7 +312,6 @@ const InfoTitle = styled.div`
       font-size: 16px;
       font-weight: 600;
     }
-
     &:nth-child(n + 2) {
       font-size: 12px;
       font-weight: 400;

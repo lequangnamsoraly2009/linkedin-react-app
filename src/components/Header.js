@@ -33,7 +33,7 @@ const Header = (props) => {
             <NavList>
               <a href="/home">
                 <img src="/images/nav-network.svg" alt="nav-network" />
-                <span>My Network</span>
+                <span>Network</span>
               </a>
             </NavList>
             <NavList>
@@ -45,7 +45,7 @@ const Header = (props) => {
             <NavList>
               <a href="/home">
                 <img src="/images/nav-messaging.svg" alt="nav-messaging" />
-                <span>Messaging</span>
+                <span>Message</span>
               </a>
             </NavList>
             <NavList>
@@ -214,7 +214,7 @@ const NavList = styled.li`
       align-items: center;
     }
     @media (max-width: 768px) {
-      min-width: 70px;
+      min-width: 60px;
     }
   }
 

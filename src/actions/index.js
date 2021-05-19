@@ -1,6 +1,11 @@
 import { auth, provider, storage } from "../firebase";
 import db from "../firebase";
-import { SET_USER, SET_LOADING_STATUS , GET_ARTICLES} from "./actionType";
+import {
+  SET_USER,
+  SET_LOADING_STATUS,
+  GET_ARTICLES,
+  GET_COMMENT,
+} from "./actionType";
 
 export const setUser = (payload) => ({
   type: SET_USER,
@@ -15,7 +20,12 @@ export const setLoading = (status) => ({
 export const getArticles = (payload) => ({
   type: GET_ARTICLES,
   payload: payload,
-})
+});
+
+export const getComments = (payload) => ({
+  type: GET_COMMENT,
+  payload: payload,
+});
 
 export function signInAPI() {
   return (dispatch) => {
@@ -63,7 +73,7 @@ export function postArticleAPI(payload) {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Progress: ${progress}%`);
-          if (snapshot.state === "RUNNUNG") {
+          if (snapshot.state === "RUNNING") {
             console.log(`Progress: ${progress}%`);
           }
         },
@@ -81,8 +91,8 @@ export function postArticleAPI(payload) {
             },
             video: "",
             sharedImg: downloadURL,
-        likes: Math.ceil(Math.random()*1000),
-            comments: Math.ceil(Math.random()*1000),
+            likes: Math.ceil(Math.random() * 1000),
+            comments: Math.ceil(Math.random() * 1000),
             description: payload.description,
           });
           dispatch(setLoading(false));
@@ -97,14 +107,13 @@ export function postArticleAPI(payload) {
           image: payload.user.photoURL,
         },
         video: payload.video,
-        likes: Math.ceil(Math.random()*1000),
-        comments: Math.ceil(Math.random()*1000),
+        likes: Math.ceil(Math.random() * 1000),
+        comments: Math.ceil(Math.random() * 1000),
         sharedImg: "",
         description: payload.description,
       });
       dispatch(setLoading(false));
-    }
-    else {
+    } else {
       db.collection("articles").add({
         actor: {
           description: payload.user.email,
@@ -113,8 +122,8 @@ export function postArticleAPI(payload) {
           image: payload.user.photoURL,
         },
         video: "",
-        likes: Math.ceil(Math.random()*1000),
-        comments: Math.ceil(Math.random()*1000),
+        likes: Math.ceil(Math.random() * 1000),
+        comments: Math.ceil(Math.random() * 1000),
         sharedImg: "",
         description: payload.description,
       });
@@ -135,3 +144,36 @@ export function getArticleAPI() {
       });
   };
 }
+
+// export function postCommentsAPI(payload) {
+//   return (dispatch) => {
+//     db.collection("articles")
+//       .doc("W6Y4t1wigrlFw14gkpzT")
+//       .collection("comments")
+//       .add({
+//         actor: {
+//           description: payload.user.email,
+//           title: payload.user.displayName,
+//           date: payload.timestamp,
+//           image: payload.user.photoURL,
+//         },
+//         // likes: Math.ceil(Math.random() * 1000),
+//         // comments: Math.ceil(Math.random() * 1000),
+//         description: payload.description,
+//       });
+//   };
+// }
+
+// export function getCommentsAPI() {
+//   return (dispatch) => {
+//     let payload;
+//     db.collection("articles")
+//       .doc()
+//       .collection("commnets")
+//       .onSnapshot((snapshot) => {
+//         payload = snapshot.docs.map((doc) => doc.data());
+//         console.log(payload);
+//         dispatch(getComments(payload));
+//       });
+//   };
+// }

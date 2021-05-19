@@ -11,8 +11,8 @@ const MainSide = (props) => {
 
   useEffect(() => {
     props.getArticles();
-    console.log(props);
   }, []);
+
 
   const handleClickClose = (e) => {
     e.preventDefault();
@@ -172,7 +172,7 @@ const MainSide = (props) => {
                       </button>
                     </Action>
                   </ActionArticle>
-                  <Comments />
+                  <Comments article />
                 </Article>
               ))}
           </ContentLoading>

@@ -10,7 +10,7 @@ import {getUserAuth} from "./actions";
 function App(props) {
   useEffect(()=>{
     props.getUserAuth();
-  },[props]);
+  },[]);
 
   return (
     <div className="App">

@@ -8,7 +8,7 @@ import Comments from "./Comments";
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
-
+//  console.log(props);
   useEffect(() => {
     props.getArticles();
   }, []);
@@ -172,7 +172,7 @@ const MainSide = (props) => {
                       </button>
                     </Action>
                   </ActionArticle>
-                  <Comments article />
+                  <Comments article={article} id={key} />
                 </Article>
               ))}
           </ContentLoading>

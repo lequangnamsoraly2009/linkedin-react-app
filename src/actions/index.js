@@ -4,7 +4,7 @@ import {
   SET_USER,
   SET_LOADING_STATUS,
   GET_ARTICLES,
-  GET_COMMENT,
+  GET_COMMENTS,
 } from "./actionType";
 
 export const setUser = (payload) => ({
@@ -23,7 +23,7 @@ export const getArticles = (payload) => ({
 });
 
 export const getComments = (payload) => ({
-  type: GET_COMMENT,
+  type: GET_COMMENTS,
   payload: payload,
 });
 
@@ -89,6 +89,7 @@ export function postArticleAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
+            uid: Math.ceil(Math.random() * 100000),
             video: "",
             sharedImg: downloadURL,
             likes: Math.ceil(Math.random() * 1000),
@@ -106,6 +107,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
+        uid: Math.ceil(Math.random() * 100000),
         video: payload.video,
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -121,6 +123,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
+        uid: Math.ceil(Math.random() * 100000),
         video: "",
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -145,35 +148,75 @@ export function getArticleAPI() {
   };
 }
 
-// export function postCommentsAPI(payload) {
-//   return (dispatch) => {
-//     db.collection("articles")
-//       .doc("W6Y4t1wigrlFw14gkpzT")
-//       .collection("comments")
-//       .add({
-//         actor: {
-//           description: payload.user.email,
-//           title: payload.user.displayName,
-//           date: payload.timestamp,
-//           image: payload.user.photoURL,
-//         },
-//         // likes: Math.ceil(Math.random() * 1000),
-//         // comments: Math.ceil(Math.random() * 1000),
-//         description: payload.description,
-//       });
-//   };
-// }
+export function postCommentsAPI(payload) {
+  return (dispatch) => {
+    // console.log(payload);
+    const articlesRefFind = db
+      .collection("articles")
+      .where("uid", "==", `${payload.article.uid}`);
+    const articlesRef = db.collection("articles");
+    articlesRefFind.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        articlesRef
+          .doc(doc.id)
+          .collection("comments")
+          .add({
+            actor: {
+              description: payload.user.email,
+              title: payload.user.displayName,
+              date: payload.timestamp,
+              image: payload.user.photoURL,
+            },
+            uid: Math.ceil(Math.random() * 100000),
+            description: payload.description,
+          });
+        // dispatch(getComments(payload));
+      });
+    });
+  };
+}
 
-// export function getCommentsAPI() {
+// export function getCommentsAPI(payload) {
 //   return (dispatch) => {
-//     let payload;
-//     db.collection("articles")
-//       .doc()
-//       .collection("commnets")
-//       .onSnapshot((snapshot) => {
-//         payload = snapshot.docs.map((doc) => doc.data());
-//         console.log(payload);
-//         dispatch(getComments(payload));
+//     let payloadFake;
+//     // console.log(payload)
+//     const articlesRefFind = db
+//       .collection("articles")
+//       .where("uid", "==", `${payload.article.uid}`);
+//     const articlesRef = db.collection("articles");
+//     articlesRefFind.get().then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
+//         articlesRef
+//           .doc(doc.id)
+//           .collection("comments").orderBy("actor.date", "desc")
+//           .onSnapshot((snapshot) => {
+//             payloadFake = snapshot.docs.map((doc) => doc.data());
+//             // console.log(payloadFake);
+//             dispatch(getComments(payloadFake));
+//           });
 //       });
+//     });
 //   };
 // }
+export function getCommentsAPI() {
+  return (dispatch) => {
+    let payloadFake;
+    // console.log(payloadFake)
+    const articlesRef = db.collection("articles");
+    db.collection("articles")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          articlesRef
+            .doc(doc.id)
+            .collection("comments")
+            .orderBy("actor.date", "desc")
+            .onSnapshot((snapshot) => {
+              payloadFake = snapshot.docs.map((doc) => doc.data());
+              // console.log(payloadFake);
+              dispatch(getComments(payloadFake));
+            });
+        });
+      });
+  };
+}

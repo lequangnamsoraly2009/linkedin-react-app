@@ -1,65 +1,85 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { postCommentsAPI } from "../../actions";
-// import firebase from "firebase";
+import { postCommentsAPI } from "../../actions";
+import firebase from "firebase";
+import {getCommentsAPI} from "../../actions";
 import { connect } from "react-redux";
+import db from "../../firebase";
 
 const Comments = (props) => {
   const [commentText, setCommentText] = useState("");
 
-//   useEffect(() => {
-//     props.getComment();
-//   }, []);
+  console.log(props);
 
-//   const postComment = (e) => {
-//     e.preventDefault();
-//     if (e.target !== e.currentTarget) {
-//       return;
-//     }
-//     const payload = {
-//         // id: firebase.firestore.collection("articles").doc(),
-//       user: props.user,
-//       comment: commentText,
-//       timestamp: firebase.firestore.Timestamp.now(),
-//     };
-//     props.postComment(payload);
-//   };
+  useEffect(() => {
+    props.getComments();
+  }, []);
 
-//   const reset = (e) => {
-//     setCommentText("");
-//     props.handleClickEnter(e);
-//   };
+  const postComment = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    const payload = {
+      // id: firebase.firestore.collection("articles").doc(),
+      user: props.user,
+      description: commentText,
+      timestamp: firebase.firestore.Timestamp.now(),
+      article: props.article,
+    };
+    // console.log(payload);
+    props.postComment(payload);
+    props.getComments(payload);
+    reset(e);
+  };
+
+  const reset = (e) => {
+    setCommentText("");
+    // props.handleClickEnter(e);
+  };
   return (
     <>
       <HeaderComment>
-      {props.user.photoURL ? (
-                  <img src={props.user.photoURL} alt="" />
-                ) : (
-                  <img src="/images/user.svg" alt="" />
-                )}
+        {props.user.photoURL ? (
+          <img src={props.user.photoURL} alt="" />
+        ) : (
+          <img src="/images/user.svg" alt="" />
+        )}
         <CommentHere>
           <form>
-            <input type="text" value={commentText} onChange={(e)=>setCommentText(e.target.value)} placeholder="Add a comment..."></input>
-            <input type="submit"  tabIndex="-1"/>
+            <input
+              type="text"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="Add a comment..."
+            ></input>
+            <input
+              type="submit"
+              tabIndex="-1"
+              onClick={(e) => postComment(e)}
+            />
           </form>
         </CommentHere>
       </HeaderComment>
-      <MainComment>
-      <HeaderMainComment>
-                 <div>
-                    <img src="/images/user.svg" alt="User" />
-                    <div>
-                        <span>Name</span>
-                        <span>Email</span>
-                    </div>
-                </div>
-                <span>30/12/2021</span>
-             </HeaderMainComment>
-        <ContentMainComment>
-          <span>Đây là comment của tao được chưa ?</span>
-        </ContentMainComment>
-        
-      </MainComment>   
+      <>
+      {props.comments.length>0&& props.comments.map((comment,key)=>(
+        <MainComment key={key}>
+          <HeaderMainComment>
+            <div>
+              <img src={comment.actor.image} alt="User Of Comment" />
+              <div>
+                <span>{comment.actor.title}</span>
+                <span>{comment.actor.description}</span>
+              </div>
+            </div>
+            <span>{comment.actor.date.toDate().toLocaleDateString()}</span>
+          </HeaderMainComment>
+          <ContentMainComment>
+            <span>{comment.description}</span>
+          </ContentMainComment>
+        </MainComment>
+      ))}
+      </>
     </>
   );
 };
@@ -167,13 +187,16 @@ const ContentMainComment = styled.div`
 `;
 
 const mapStateToProps = (state) => {
-    return {
-      user: state.userState.user,
-    };
+  return {
+    user: state.userState.user,
+    // article: state.articleState.article,
+    comments: state.commentState.comments,
   };
+};
 
-  const mapDispatchToProps = (dispatch) => ({
-    // postComment: (payload) => dispatch(postCommentsAPI(payload)),
-  });
+const mapDispatchToProps = (dispatch) => ({
+  postComment: (payload) => dispatch(postCommentsAPI(payload)),
+  getComments: () => dispatch(getCommentsAPI()),
+});
 
-export default connect(mapStateToProps,mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

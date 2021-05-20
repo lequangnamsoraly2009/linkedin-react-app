@@ -4,12 +4,11 @@ import { postCommentsAPI } from "../../actions";
 import firebase from "firebase";
 import {getCommentsAPI} from "../../actions";
 import { connect } from "react-redux";
-import db from "../../firebase";
 
 const Comments = (props) => {
   const [commentText, setCommentText] = useState("");
 
-  console.log(props);
+  // console.log(props);
 
   useEffect(() => {
     props.getComments();
@@ -29,7 +28,6 @@ const Comments = (props) => {
     };
     // console.log(payload);
     props.postComment(payload);
-    props.getComments(payload);
     reset(e);
   };
 
@@ -88,13 +86,11 @@ const HeaderComment = styled.div`
   display: flex;
   flex-direction: start;
   width: 100%;
-
   height: 50px;
   margin: 0 15px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 5px 0;
-
   img {
     border-radius: 50%;
     margin-left: 5px;
@@ -141,6 +137,8 @@ const MainComment = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 15px 10px 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+
 `;
 
 const HeaderMainComment = styled.div`
@@ -148,6 +146,7 @@ const HeaderMainComment = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 50px;
+
   div {
     display: flex;
     flex-direction: row;

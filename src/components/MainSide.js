@@ -423,6 +423,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getArticles: () => dispatch(getArticleAPI()),
+  // getComments: () => dispatch(getCommentsAPI()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainSide);

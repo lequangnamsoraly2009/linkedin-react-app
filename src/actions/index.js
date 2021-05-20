@@ -213,7 +213,7 @@ export function getCommentsAPI() {
             .orderBy("actor.date", "desc")
             .onSnapshot((snapshot) => {
               payloadFake = snapshot.docs.map((doc) => doc.data());
-              // console.log(payloadFake);
+              console.log(payloadFake);
               dispatch(getComments(payloadFake));
             });
         });

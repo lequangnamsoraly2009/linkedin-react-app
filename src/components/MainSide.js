@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PostModal from "./PostModal";
-import { getArticleAPI } from "../actions";
+import { getArticleAPI, getCommentsAPI } from "../actions";
 import ReactPlayer from "react-player";
 import Comments from "./Comments";
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
-//  console.log(props);
+  const dispatch = useDispatch();
+
+  const articles = useSelector(state => state.articleState.articles)
+  const comments = useSelector(state => state.commentState.comments)
+  const user = useSelector(state => state.userState.user)
+  // console.log('user', user);
+  // console.log(props.user)
+  // console.log('articles', articles, comments)
   useEffect(() => {
-    props.getArticles();
+    dispatch(getArticleAPI())
+    dispatch(getCommentsAPI())
   }, []);
 
-
+  // thay sai sai sao a.
   const handleClickClose = (e) => {
     e.preventDefault();
     if (e.target !== e.currentTarget) {
@@ -34,13 +42,13 @@ const MainSide = (props) => {
   };
   return (
     <>
-      {props.articles.length === 0 ? (
+      {articles?.length === 0 ? (
         <ShareBox>
           What the fuck are you sharing?
           <StartPost>
             <div>
               {props.user ? (
-                <img src={props.user.photoURL} alt="" />
+                <img src={user.photoURL} alt="" />
               ) : (
                 <img src="/images/user.svg" alt="" />
               )}
@@ -101,8 +109,8 @@ const MainSide = (props) => {
           </ShareBox>
           <ContentLoading>
             {props.loading && <img src="./images/spin-loader.svg" alt="" />}
-            {props.articles.length > 0 &&
-              props.articles.map((article, key) => (
+            {articles?.length > 0 &&
+              articles.map((article, key) => (
                 <Article key={key}>
                   <HeaderInfo>
                     <InfoUser>
@@ -172,7 +180,7 @@ const MainSide = (props) => {
                       </button>
                     </Action>
                   </ActionArticle>
-                  <Comments article={article} id={key} />
+                  <Comments article={article} id={key} comments={comments}  user={user}/>
                 </Article>
               ))}
           </ContentLoading>
@@ -413,17 +421,19 @@ const ContentLoading = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    loading: state.articleState.loading,
-    user: state.userState.user,
-    articles: state.articleState.articles,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     loading: state.articleState.loading,
+//     user: state.userState.user,
+//     articles: state.articleState.articles,
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-  getArticles: () => dispatch(getArticleAPI()),
-  // getComments: () => dispatch(getCommentsAPI()),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   getArticles: () => dispatch(getArticleAPI()),
+//   // getComments: () => dispatch(getCommentsAPI()),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainSide);
+// export default connect(mapStateToProps, mapDispatchToProps)(MainSide);
+
+export default MainSide;

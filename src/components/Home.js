@@ -4,6 +4,7 @@ import RightSide from './RightSide';
 import MainSide from './MainSide';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+// import { useEffect } from 'react';
 
 const Home = (props) =>{
     return(
@@ -11,7 +12,7 @@ const Home = (props) =>{
             {!props.user && <Redirect to='/'/>}
             <Layout>
                 <LeftSide/>
-                <MainSide/>
+                <MainSide user={props.user}/>
                 <RightSide/>
             </Layout>
         </Container>

@@ -17,10 +17,12 @@ export const setLoading = (status) => ({
   status: status,
 });
 
-export const getArticles = (payload) => ({
-  type: GET_ARTICLES,
-  payload: payload,
-});
+export const getArticles = (payload) => {
+  return {
+    type: GET_ARTICLES,
+    payload: payload,
+  };
+};
 
 export const getComments = (payload) => ({
   type: GET_COMMENTS,
@@ -89,7 +91,7 @@ export function postArticleAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
-            uid: Math.ceil(Math.random() * 100000),
+            uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
             video: "",
             sharedImg: downloadURL,
             likes: Math.ceil(Math.random() * 1000),
@@ -107,7 +109,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
-        uid: Math.ceil(Math.random() * 100000),
+        uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
         video: payload.video,
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -123,7 +125,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
-        uid: Math.ceil(Math.random() * 100000),
+        uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
         video: "",
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -149,8 +151,8 @@ export function getArticleAPI() {
 }
 
 export function postCommentsAPI(payload) {
-  return (dispatch) => {
-    // console.log(payload);
+  return async () => {
+    console.log(payload);
     const articlesRefFind = db
       .collection("articles")
       .where("uid", "==", `${payload.article.uid}`);
@@ -167,10 +169,10 @@ export function postCommentsAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
-            uid: Math.ceil(Math.random() * 100000),
+            uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
+            __uid: payload.article.uid,
             description: payload.description,
           });
-        // dispatch(getComments(payload));
       });
     });
   };
@@ -199,22 +201,33 @@ export function postCommentsAPI(payload) {
 //   };
 // }
 export function getCommentsAPI() {
-  return (dispatch) => {
-    let payloadFake;
-    // console.log(payloadFake)
+  // cais nay dc goi o dau v
+  return async (dispatch) => {
+    let data = {};
     const articlesRef = db.collection("articles");
-    db.collection("articles")
+    const objPost = {};
+    await db
+      .collection("articles")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          objPost[doc.id] = doc.data();
+        });
+      }); // ddoiwj ti dang nt
+    await db
+      .collection("articles")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((docPost) => {
           articlesRef
-            .doc(doc.id)
+            .doc(docPost.id)
             .collection("comments")
             .orderBy("actor.date", "desc")
             .onSnapshot((snapshot) => {
-              payloadFake = snapshot.docs.map((doc) => doc.data());
-              console.log(payloadFake);
-              dispatch(getComments(payloadFake));
+              data[objPost[docPost.id].uid] = snapshot.docs.map((docComment) =>
+                docComment.data()
+              );
+              dispatch(getComments(data));
             });
         });
       });

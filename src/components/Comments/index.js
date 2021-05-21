@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { postCommentsAPI } from "../../actions";
 import firebase from "firebase";
-import {getCommentsAPI} from "../../actions";
-import { connect } from "react-redux";
+import ListComment from "../ListComment.js";
+import { useDispatch } from "react-redux";
+import { postCommentsAPI } from "../../actions/index.js";
 
 const Comments = (props) => {
   const [commentText, setCommentText] = useState("");
-
-  // console.log(props);
-
-  useEffect(() => {
-    props.getComments();
-  }, []);
-
+  const dispatch = useDispatch();  
+ 
   const postComment = (e) => {
     e.preventDefault();
     if (e.target !== e.currentTarget) {
       return;
     }
     const payload = {
-      // id: firebase.firestore.collection("articles").doc(),
       user: props.user,
       description: commentText,
       timestamp: firebase.firestore.Timestamp.now(),
       article: props.article,
     };
-    // console.log(payload);
-    props.postComment(payload);
+    dispatch(postCommentsAPI(payload));
     reset(e);
   };
+
+
 
   const reset = (e) => {
     setCommentText("");
@@ -59,25 +54,7 @@ const Comments = (props) => {
           </form>
         </CommentHere>
       </HeaderComment>
-      <>
-      {props.comments.length>0&& props.comments.map((comment,key)=>(
-        <MainComment key={key}>
-          <HeaderMainComment>
-            <div>
-              <img src={comment.actor.image} alt="User Of Comment" />
-              <div>
-                <span>{comment.actor.title}</span>
-                <span>{comment.actor.description}</span>
-              </div>
-            </div>
-            <span>{comment.actor.date.toDate().toLocaleDateString()}</span>
-          </HeaderMainComment>
-          <ContentMainComment>
-            <span>{comment.description}</span>
-          </ContentMainComment>
-        </MainComment>
-      ))}
-      </>
+      <ListComment article={props.article} comments={props.comments}/>
     </>
   );
 };
@@ -130,72 +107,7 @@ const CommentHere = styled.div`
   }
 `;
 
-const MainComment = styled.div`
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  display: flex;
-  flex-direction: column;
-  margin: 20px 15px 10px 15px;
-  border-bottom: 1px solid rgba(0,0,0,0.3);
+export default Comments;
 
-`;
+// ?? sao k dùng useDispatch vs useSelector 
 
-const HeaderMainComment = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 50px;
-
-  div {
-    display: flex;
-    flex-direction: row;
-    img {
-      border-radius: 50%;
-      margin-left: 5px;
-      height: 45px;
-    }
-    & > div {
-      text-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      margin-left: 15px;
-      margin-bottom: 5px;
-      span:first-child {
-        font-size: 16px;
-      }
-      span:last-child {
-        font-size: 12px;
-      }
-    }
-  }
-  & > span {
-    margin-right: 18px;
-    margin-top: 15px;
-    align-items: center;
-    align-self: auto;
-    font-size: 14px;
-  }
-`;
-
-const ContentMainComment = styled.div`
-  text-align: start;
-  margin: 5px 15px;
-  margin-left: 65px;
-`;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.userState.user,
-    // article: state.articleState.article,
-    comments: state.commentState.comments,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  postComment: (payload) => dispatch(postCommentsAPI(payload)),
-  getComments: () => dispatch(getCommentsAPI()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);

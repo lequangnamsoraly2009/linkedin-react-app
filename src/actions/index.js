@@ -236,7 +236,7 @@ export function getCommentsAPI() {
 
 export function deleteAticleAPI(payload) {
   return (dispatch) => {
-    console.log(payload);
+    // console.log(payload);
     const articlesRefFind = db
       .collection("articles")
       .where("uid", "==", `${payload.uid}`);
@@ -254,5 +254,59 @@ export function deleteAticleAPI(payload) {
           });
       });
     });
+  };
+}
+
+export function deleteCommentAPI(payload) {
+  return async () => {
+    // const objComment = {};
+    // console.log(payload);
+    const articlesRefFind = db
+      .collection("articles")
+      .where("uid", "==", `${payload.uid_article}`);
+
+    const articlesRef = db.collection("articles");
+    // articlesRefFind.get().then((querySnapshot) => {
+    //   querySnapshot.forEach((doc) => {
+    //     articlesRef
+    //       .doc(doc.id)
+    //       .collection("comments")
+    //       .get()
+    //       .then((querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //           objComment[doc.id] = doc.data();
+    //         });
+    //       });
+    //   });
+    // });
+    // console.log(objComment);
+    await articlesRefFind
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((docPost) => {
+          
+          const commentDelete = articlesRef
+            .doc(docPost.id)
+            .collection("comments").where("uid", "==", `${payload.uid_comment}`);
+            
+            commentDelete
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((docComment) => {
+                articlesRef
+                  .doc(docPost.id)
+                  .collection("comments")
+                  .doc(docComment.id)
+                  .delete()
+                  .then(() => {
+                    console.log("Document successfully deleted!");
+                  })
+                  .catch((error) => {
+                    console.error("Error removing document: ", error);
+                  });
+              });
+            });
+        });
+      });
   };
 }

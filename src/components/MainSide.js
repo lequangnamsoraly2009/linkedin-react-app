@@ -6,12 +6,9 @@ import { getArticleAPI, getCommentsAPI, deleteAticleAPI } from "../actions";
 import ReactPlayer from "react-player";
 import Comments from "./Comments";
 import LazyLoad from "react-lazyload";
+// import { useHistory } from "react-router";
 
-const Loading = () => (
-  <div className="post loading">
-    <h5>Loading...</h5>
-  </div>
-);
+
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
@@ -23,6 +20,12 @@ const MainSide = (props) => {
   // console.log('user', user);
   // console.log(props.user)
   // console.log('articles', articles, comments)
+
+  const Loading = () => (
+    <div className="post loading">
+      <h5>Loading...</h5>
+    </div>
+  );
   useEffect(() => {
     dispatch(getArticleAPI());
     dispatch(getCommentsAPI());
@@ -62,6 +65,26 @@ const MainSide = (props) => {
       dispatch(deleteAticleAPI(payload));
   }
 }
+
+// const handleClickEditArticle = (e,article) => {
+//   e.preventDefault();
+//   if(e.target !== e.currentTarget)return;
+//   else{
+//     const payload = {
+//       uid: article.uid,
+//     }
+
+//   }
+// }
+// const history = useHistory()
+
+// const handleGetArticleToEdit = (e,article) => {
+//   e.preventDefault();
+//   if(e.target !== e.currentTarget)return;
+//   else{
+//     history.push(`/home/${article.uid}`);
+//   }
+// }
 
   return (
     <>
@@ -150,12 +173,10 @@ const MainSide = (props) => {
                       </InfoUser>
                       <OptionInfo>
                         <img src="/images/ellipsis-icon.svg" alt="" />
-                        <DeleteArticle>
+                        <OptionsArticle>
                           <a href="/" onClick={(e) =>handleClickDeleteArticle(e,article)} >Delete</a>
-                          <a href="/">Delete</a>
-                          <a href="/">Delete</a>
-                          <a href="/">Delete</a>
-                        </DeleteArticle>
+                          <a href="/" >Edit</a>
+                        </OptionsArticle>
                       </OptionInfo>
                     </HeaderInfo>
                     <TextArticle>{article.description}</TextArticle>
@@ -320,7 +341,7 @@ const Photo = styled.div`
 
 const Article = styled(CommonCard)``;
 
-const DeleteArticle = styled.div`
+const OptionsArticle = styled.div`
   position: absolute;
   top: 40px;
   right: 0px;
@@ -355,7 +376,7 @@ const OptionInfo = styled.div`
     vertical-align: middle;
   }
   &:hover {
-      ${DeleteArticle} {
+      ${OptionsArticle} {
         /* color: red; */
         align-items: center;
         display: flex;

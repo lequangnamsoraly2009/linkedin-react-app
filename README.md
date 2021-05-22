@@ -75,24 +75,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-## Process: 
+# Process: 
 
-# 12/05/2021 -> 18/05/2021
+### 12/05/2021 -> 18/05/2021
     - Structure UI simple (Tutorial 7 hours from Youtube)
 
-# 19/05/2021
+### 19/05/2021
     - Read Docs Firebase 
 
-# 20/05/2021
+### 20/05/2021
     - Add Comments For Post (UI)
 
-# 21/05/2021
+### 21/05/2021
     - Get Comment From Input Then Post Database 
     - Save Comment on Database Firestore
     - articles/documentsPost/comments/documentsComment
-# 22/05/2021
+### 22/05/2021
     - Complete Get Comments From Database (Teamview by Big-Boss :v)
     - Change use HOC to Hooks
-# 23/05/2021: 
+### 23/05/2021: 
     - Code Complete Delete Post 
     - Code Complete Delete Comment

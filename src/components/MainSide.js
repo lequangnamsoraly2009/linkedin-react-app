@@ -2,23 +2,30 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PostModal from "./PostModal";
-import { getArticleAPI, getCommentsAPI } from "../actions";
+import { getArticleAPI, getCommentsAPI, deleteAticleAPI } from "../actions";
 import ReactPlayer from "react-player";
 import Comments from "./Comments";
+import LazyLoad from "react-lazyload";
+
+const Loading = () => (
+  <div className="post loading">
+    <h5>Loading...</h5>
+  </div>
+);
 
 const MainSide = (props) => {
   const [showModal, setShowModal] = useState("close");
   const dispatch = useDispatch();
 
-  const articles = useSelector(state => state.articleState.articles)
-  const comments = useSelector(state => state.commentState.comments)
-  const user = useSelector(state => state.userState.user)
+  const articles = useSelector((state) => state.articleState.articles);
+  const comments = useSelector((state) => state.commentState.comments);
+  const user = useSelector((state) => state.userState.user);
   // console.log('user', user);
   // console.log(props.user)
   // console.log('articles', articles, comments)
   useEffect(() => {
-    dispatch(getArticleAPI())
-    dispatch(getCommentsAPI())
+    dispatch(getArticleAPI());
+    dispatch(getCommentsAPI());
   }, []);
 
   // thay sai sai sao a.
@@ -40,6 +47,22 @@ const MainSide = (props) => {
       }
     }
   };
+
+  // console.log(props);
+
+  const handleClickDeleteArticle = (e,article) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    } else {
+      const payload = {
+        uid: article.uid,
+      };
+      // console.log(payload);
+      dispatch(deleteAticleAPI(payload));
+  }
+}
+
   return (
     <>
       {articles?.length === 0 ? (
@@ -111,77 +134,92 @@ const MainSide = (props) => {
             {props.loading && <img src="./images/spin-loader.svg" alt="" />}
             {articles?.length > 0 &&
               articles.map((article, key) => (
-                <Article key={key}>
-                  <HeaderInfo>
-                    <InfoUser>
-                      <img src={article.actor.image} alt="" />
-                      <InfoTitle>
-                        <span>{article.actor.title}</span>
-                        <span>{article.actor.description}</span>
-                        <span>
-                          {article.actor.date.toDate().toLocaleDateString()}
-                          <img src="/images/global-icon.svg" alt="" />
-                        </span>
-                      </InfoTitle>
-                    </InfoUser>
-                    <img src="/images/ellipsis-icon.svg" alt="" />
-                  </HeaderInfo>
-                  <TextArticle>{article.description}</TextArticle>
-                  <ImgShared>
-                    <a href="/">
-                      {!article.sharedImg && article.video ? (
-                        <ReactPlayer width={"100%"} url={article.video} />
-                      ) : (
-                        article.sharedImg && (
-                          <img src={article.sharedImg} alt="" />
-                        )
-                      )}
-                    </a>
-                  </ImgShared>
-                  <ActionCount>
-                    <li>
-                      <button>
-                      <img
-                          src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
-                          alt=""
-                        />
-                        <img
-                          src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
-                          alt=""
-                        />
-                        <img
-                          src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
-                          alt=""
-                        />
-                        <span>{article.likes}</span>
-                      </button>
-                    </li>
-                    <li>
-                      <a href="/home">{article.comments} Comments</a>
-                    </li>
-                  </ActionCount>
-                  <ActionArticle>
-                    <Action>
-                      <button>
-                        <img src="/images/like-black-icon.svg" alt="" />
-                        <span>Like</span>
-                      </button>
-                    </Action>
-                    <Action>
-                      <button>
-                        <img src="/images/message-icon.svg" alt="" />
-                        <span>Comment</span>
-                      </button>
-                    </Action>
-                    <Action>
-                      <button>
-                        <img src="/images/share-icon.svg" alt="" />
-                        <span>Share</span>
-                      </button>
-                    </Action>
-                  </ActionArticle>
-                  <Comments article={article} id={key} comments={comments}  user={user}/>
-                </Article>
+                <LazyLoad key={key} placeholder={<Loading />} height={200} once>
+                  <Article key={key}>
+                    <HeaderInfo>
+                      <InfoUser>
+                        <img src={article.actor.image} alt="" />
+                        <InfoTitle>
+                          <span>{article.actor.title}</span>
+                          <span>{article.actor.description}</span>
+                          <span>
+                            {article.actor.date.toDate().toLocaleDateString()}
+                            <img src="/images/global-icon.svg" alt="" />
+                          </span>
+                        </InfoTitle>
+                      </InfoUser>
+                      <OptionInfo>
+                        <img src="/images/ellipsis-icon.svg" alt="" />
+                        <DeleteArticle>
+                          <a href="/" onClick={(e) =>handleClickDeleteArticle(e,article)} >Delete</a>
+                          <a href="/">Delete</a>
+                          <a href="/">Delete</a>
+                          <a href="/">Delete</a>
+                        </DeleteArticle>
+                      </OptionInfo>
+                    </HeaderInfo>
+                    <TextArticle>{article.description}</TextArticle>
+                    <ImgShared>
+                      <a href="/">
+                        {!article.sharedImg && article.video ? (
+                          <ReactPlayer width={"100%"} url={article.video} />
+                        ) : (
+                          article.sharedImg && (
+                            <img src={article.sharedImg} alt="" />
+                          )
+                        )}
+                      </a>
+                    </ImgShared>
+                    <ActionCount>
+                      <li>
+                        <button>
+                          <img
+                            src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+                            alt=""
+                          />
+                          <img
+                            src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
+                            alt=""
+                          />
+                          <img
+                            src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
+                            alt=""
+                          />
+                          <span>{article.likes}</span>
+                        </button>
+                      </li>
+                      <li>
+                        <a href="/home">{article.comments} Comments</a>
+                      </li>
+                    </ActionCount>
+                    <ActionArticle>
+                      <Action>
+                        <button>
+                          <img src="/images/like-black-icon.svg" alt="" />
+                          <span>Like</span>
+                        </button>
+                      </Action>
+                      <Action>
+                        <button>
+                          <img src="/images/message-icon.svg" alt="" />
+                          <span>Comment</span>
+                        </button>
+                      </Action>
+                      <Action>
+                        <button>
+                          <img src="/images/share-icon.svg" alt="" />
+                          <span>Share</span>
+                        </button>
+                      </Action>
+                    </ActionArticle>
+                    <Comments
+                      article={article}
+                      id={key}
+                      comments={comments}
+                      user={user}
+                    />
+                  </Article>
+                </LazyLoad>
               ))}
           </ContentLoading>
 
@@ -282,14 +320,50 @@ const Photo = styled.div`
 
 const Article = styled(CommonCard)``;
 
+const DeleteArticle = styled.div`
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  background: white;
+  border-radius: 0 0 5px 5px;
+  width: 70px;
+  height:auto;
+  max-height: 200px;
+  font-size: 16px;
+  transition-duration: 0.16s;
+  text-align: right;
+  display: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  /* display: block; */
+  a{
+    text-decoration: none;
+    color: #70b5f9;
+  }
+  
+`;
+
 const HeaderInfo = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const OptionInfo = styled.div`
   img {
+    height: 40px;
     width: 30px;
-    margin: 15px;
+    margin: 0 15px;
     vertical-align: middle;
   }
+  &:hover {
+      ${DeleteArticle} {
+        /* color: red; */
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 2;
+      }
+    }
   @media (max-width: 768px) {
     img {
       width: 20px;

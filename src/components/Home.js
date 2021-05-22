@@ -12,7 +12,7 @@ const Home = (props) =>{
             {!props.user && <Redirect to='/'/>}
             <Layout>
                 <LeftSide/>
-                <MainSide user={props.user}/>
+                <MainSide user={props.user} articles={props.articles}/>
                 <RightSide/>
             </Layout>
         </Container>
@@ -42,6 +42,7 @@ const Layout = styled.div`
 const mapStateToProps = (state) =>{
     return{
         user: state.userState.user,
+        articles: state.articleState.articles,
     }
 }
 

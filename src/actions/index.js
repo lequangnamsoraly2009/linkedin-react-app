@@ -91,7 +91,7 @@ export function postArticleAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
-            uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
+            uid: `${Math.ceil(Math.random() * 999998 + 100000)}`,
             video: "",
             sharedImg: downloadURL,
             likes: Math.ceil(Math.random() * 1000),
@@ -109,7 +109,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
-        uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
+        uid: `${Math.ceil(Math.random() * 999998 + 100000)}`,
         video: payload.video,
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -125,7 +125,7 @@ export function postArticleAPI(payload) {
           date: payload.timestamp,
           image: payload.user.photoURL,
         },
-        uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
+        uid: `${Math.ceil(Math.random() * 999998 + 100000)}`,
         video: "",
         likes: Math.ceil(Math.random() * 1000),
         comments: Math.ceil(Math.random() * 1000),
@@ -169,7 +169,7 @@ export function postCommentsAPI(payload) {
               date: payload.timestamp,
               image: payload.user.photoURL,
             },
-            uid: `${Math.ceil((Math.random() * 999998) + 100000)}`,
+            uid: `${Math.ceil(Math.random() * 999998 + 100000)}`,
             __uid: payload.article.uid,
             description: payload.description,
           });
@@ -231,5 +231,28 @@ export function getCommentsAPI() {
             });
         });
       });
+  };
+}
+
+export function deleteAticleAPI(payload) {
+  return (dispatch) => {
+    console.log(payload);
+    const articlesRefFind = db
+      .collection("articles")
+      .where("uid", "==", `${payload.uid}`);
+    const articlesRef = db.collection("articles");
+    articlesRefFind.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        articlesRef
+          .doc(doc.id)
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      });
+    });
   };
 }

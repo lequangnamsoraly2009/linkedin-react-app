@@ -1,7 +1,11 @@
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Leftside = (props) => {
+
+  const user = useSelector((state) => state.userState.user);
+
   return (
     <Container>
       <ArtCard>
@@ -9,14 +13,14 @@ const Leftside = (props) => {
           <CardBackground />
           <a href="/home">
             <Photo>
-              {props.user && props.user.photoURL ? (
-                <img src={props.user.photoURL} alt="img" />
+              {user && user.photoURL ? (
+                <img src={user.photoURL} alt="img" />
               ) : (
                 <img src="/images/user.svg" alt="img" />
               )}
             </Photo>
-            {props.user && props.user.displayName ? (
-              <Link>Welcome {props.user.displayName}</Link>
+            {user && user.displayName ? (
+              <Link>Welcome {user.displayName}</Link>
             ) : (
               <Link>Welcome, there!</Link>
             )}
@@ -219,14 +223,14 @@ const CommunityCard = styled(ArtCard)`
   }
 `;
 
-const mapStateToProps = (state) => ({
-  user: state.userState.user,
-});
+// const mapStateToProps = (state) => ({
+//   user: state.userState.user,
+// });
 
-const mapDispatchToProps = (dispatch)=>{
-  return {};
-}
+// const mapDispatchToProps = (dispatch)=>{
+//   return {};
+// }
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Leftside);
+export default Leftside;

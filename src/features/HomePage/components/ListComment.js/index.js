@@ -19,17 +19,21 @@ const ListComment = ({ comments, article }) => {
     }
   }
 
-  const handleClickEditComment = (e,comment) => {
-    e.preventDefault();
-    if(e.target !== e.currentTarget)return;
-    else{
-      const payload = {
-        id : comment.uid,
-        description: comment.description,
-      }
-      dispatch()
-    }
-  }
+  // const handleClickEditComment = (e,comment) => {
+  //   e.preventDefault();
+  //   if(e.target !== e.currentTarget)return;
+  //   else{
+  //     const payload = {
+  //       id : comment.uid,
+  //       description: comment.description,
+  //     }
+  //     dispatch()
+  //   }
+  // }
+
+  // const handleChangeEditComment = (comment) => {
+
+  // }
 
   return (
     <>
@@ -53,7 +57,7 @@ const ListComment = ({ comments, article }) => {
                     <img src="/images/ellipsis-icon.svg" alt="" />
                     <OptionsComment>
                       <a href="/" onClick={(e) =>handleClickDeleteComment(e,comment)}>Delete</a>
-                      <a href="/" onClick={(e) =>handleClickEditComment(e,comment)} onChange={(e) => handleChangeEditComment(e,comment)}>Edit</a>
+                      <a href="/" >Edit</a>
                     </OptionsComment>
                   </OptionInfoComment>
                 </WrapLinhTinh>

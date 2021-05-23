@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import firebase from "firebase";
 import { postArticleAPI } from "../../../../actions";
 
@@ -10,6 +10,9 @@ const PostModal = (props) => {
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
   const [assetArea, setAssetArea] = useState("");
+
+  const dispatch = useDispatch();
+  const user = useSelector((state)  => state.userState.user);
 
   const handleChange = (e) => {
     const image = e.target.files[0];
@@ -35,11 +38,11 @@ const PostModal = (props) => {
     const payload = {
       image: shareImage,
       video: videoLink,
-      user: props.user,
+      user: user,
       description: editorText,
       timestamp: firebase.firestore.Timestamp.now(),
     };
-    props.postArticle(payload);
+    dispatch(postArticleAPI(payload));
     reset(e);
   };
 
@@ -64,13 +67,13 @@ const PostModal = (props) => {
             </Header>
             <SharedContent>
               <UserInfo>
-                {props.user.photoURL ? (
-                  <img src={props.user.photoURL} alt="" />
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="" />
                 ) : (
                   <img src="/images/user.svg" alt="" />
                 )}
-                {props.user.displayName ? (
-                  <span>{props.user.displayName}</span>
+                {user.displayName ? (
+                  <span>{user.displayName}</span>
                 ) : (
                   <span>Undefined Name</span>
                 )}
@@ -294,14 +297,16 @@ const VideoInput = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.userState.user,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     user: state.userState.user,
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => ({
-  postArticle: (payload) => dispatch(postArticleAPI(payload)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   postArticle: (payload) => dispatch(postArticleAPI(payload)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
+// export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
+
+export default PostModal;

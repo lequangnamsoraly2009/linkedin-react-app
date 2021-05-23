@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import firebase from "firebase";
-import { postArticleAPI } from "../actions";
+import { postArticleAPI } from "../../../../actions";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");

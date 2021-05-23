@@ -3,7 +3,7 @@ import "./App.css";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./components/Home";
+import Home from "./features/HomePage/index";
 import { useEffect } from "react";
 import {getUserAuth} from "./actions";
 

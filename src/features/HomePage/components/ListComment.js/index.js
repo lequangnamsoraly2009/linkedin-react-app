@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteCommentAPI } from "../../actions";
+import { deleteCommentAPI } from "../../../../actions";
 
 
 const ListComment = ({ comments, article }) => {
 
   const dispatch = useDispatch();
 
-  const handleClickDeleteArticle = (e,comment) => {
+  const handleClickDeleteComment = (e,comment) => {
     e.preventDefault();
     if(e.target !== e.currentTarget)return;
     else{
@@ -16,6 +16,18 @@ const ListComment = ({ comments, article }) => {
         uid_article: comment.__uid,
       }
       dispatch(deleteCommentAPI(payload));
+    }
+  }
+
+  const handleClickEditComment = (e,comment) => {
+    e.preventDefault();
+    if(e.target !== e.currentTarget)return;
+    else{
+      const payload = {
+        id : comment.uid,
+        description: comment.description,
+      }
+      dispatch()
     }
   }
 
@@ -40,8 +52,8 @@ const ListComment = ({ comments, article }) => {
                   <OptionInfoComment>
                     <img src="/images/ellipsis-icon.svg" alt="" />
                     <OptionsComment>
-                      <a href="/" onClick={(e) =>handleClickDeleteArticle(e,comment)}>Delete</a>
-                      <a href="/">Edit</a>
+                      <a href="/" onClick={(e) =>handleClickDeleteComment(e,comment)}>Delete</a>
+                      <a href="/" onClick={(e) =>handleClickEditComment(e,comment)} onChange={(e) => handleChangeEditComment(e,comment)}>Edit</a>
                     </OptionsComment>
                   </OptionInfoComment>
                 </WrapLinhTinh>

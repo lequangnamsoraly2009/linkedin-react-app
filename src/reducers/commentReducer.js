@@ -1,4 +1,4 @@
-import {GET_COMMENTS} from "../actions/actionType";
+import {GET_COMMENTS,EDIT_COMMENT} from "../actions/actionType";
 export const initState = {
     comments: [],
 };
@@ -9,6 +9,10 @@ const commentReducer = (state = initState,action) =>{
             return {
                 comments: action.payload,
             };
+        case EDIT_COMMENT:
+            return{
+                comment: action.payload,
+            }
         default:
             return state;
     }

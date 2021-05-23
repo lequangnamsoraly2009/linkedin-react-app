@@ -3,16 +3,19 @@ import LeftSide from "../components/LeftSide";
 import RightSide from "../components/RightSide";
 import MainSide from "../components/MainSide";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+// import { connect } from "react-redux";
 // import { useEffect } from 'react';
 
 const Home = (props) => {
+    const user = useSelector((state) => state.userState.user);
+    const articles = useSelector((state) => state.articleState.articles);
   return (
     <Container>
-      {!props.user && <Redirect to="/" />}
+      {!user && <Redirect to="/" />}
       <Layout>
         <LeftSide />
-        <MainSide user={props.user} articles={props.articles} />
+        <MainSide user={user} articles={articles} />
         <RightSide />
       </Layout>
     </Container>
@@ -39,11 +42,13 @@ const Layout = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.userState.user,
-    articles: state.articleState.articles,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     user: state.userState.user,
+//     articles: state.articleState.articles,
+//   };
+// };
 
-export default connect(mapStateToProps)(Home);
+// export default connect(mapStateToProps)(Home);
+
+export default Home;

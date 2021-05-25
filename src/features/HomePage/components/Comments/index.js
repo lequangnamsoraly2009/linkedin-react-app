@@ -3,7 +3,7 @@ import styled from "styled-components";
 import firebase from "firebase";
 import ListComment from "../ListComment.js";
 import { useDispatch } from "react-redux";
-import { postCommentsAPI } from "../../../../actions";
+import { postCommentsAPI } from "actions/index.js";
 
 const Comments = (props) => {
   const [commentText, setCommentText] = useState("");

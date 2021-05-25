@@ -1,6 +1,6 @@
+import { deleteCommentAPI } from "actions";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteCommentAPI } from "../../../../actions";
 
 
 const ListComment = ({ comments, article }) => {

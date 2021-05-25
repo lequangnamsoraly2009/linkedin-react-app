@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PostModal from "./Modal/PostModal";
-import { getArticleAPI, getCommentsAPI, deleteAticleAPI } from "../../../actions";
 import ReactPlayer from "react-player";
 import Comments from "./Comments";
 import LazyLoad from "react-lazyload";
+import { deleteAticleAPI, getArticleAPI, getCommentsAPI } from "actions";
 // import { useHistory } from "react-router";
 
 

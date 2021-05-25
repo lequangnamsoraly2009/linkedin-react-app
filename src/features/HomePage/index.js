@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import HomePage from './page/HomePage';
 import EditPostPage from './page/EditPostPage';
-import NotFound from "../../components/NotFoundPage"
+import NotFound from 'components/NotFoundPage';
 
 
 
